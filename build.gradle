@@ -1,0 +1,41 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+}
+
+group 'org.dragonguard'
+version '0.1-ALPHA'
+
+sourceCompatibility = 1.8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree("libs")
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+    }
+}
+
+shadowJar {
+    classifier null
+}
+
+assemble.dependsOn(shadowJar)
+
+jar {
+    manifest {
+        attributes("Main-Class": "org.dragonguard.server.Main")
+    }
+}
